@@ -3,9 +3,10 @@ project:
   resources:
     - images
   pre-render:
-    - powershell -ExecutionPolicy Bypass -File ./generate-cover.ps1
+    - "powershell -ExecutionPolicy Bypass -File ./archive/kill-word.ps1"
+    - "powershell -ExecutionPolicy Bypass -File ./archive/generate-cover.ps1 -TemplateCover \"archive/Portada_Template.docx\" -OutputCover \"archive/Portada.docx\""
   post-render:
-    - powershell -ExecutionPolicy Bypass -File ./merge.ps1
+    - "powershell -ExecutionPolicy Bypass -File ./archive/merge.ps1 -Cover \"archive/Portada.docx\""
 
 format:
   apaquarto-docx: default

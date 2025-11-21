@@ -1,0 +1,15 @@
+{
+  "Quarto APA Figure": {
+    "scope": "markdown,quarto,quarto-markdown",
+    "prefix": ["fig", "qfig", "apfig"],
+    "description": "Figura APA Quarto con id auto a partir del titulo",
+    "body": [
+      "![${1:titulo de la figura}](${2:${TM_SELECTED_TEXT:archivo.png}}){",
+      "#fig_${1/(\\s+|[^A-Za-z0-9]+)/_/g}",
+      "width=\"${3:5in}\"",
+      "apa-note=\"${4:Nota al pie de la figura.}\"",
+      "}",
+      "$0"
+    ]
+  }
+}

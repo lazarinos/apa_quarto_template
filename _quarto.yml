@@ -1,0 +1,15 @@
+project:
+  type: default
+  resources:
+    - images
+  pre-render:
+    - powershell -ExecutionPolicy Bypass -File ./generate-cover.ps1
+  post-render:
+    - powershell -ExecutionPolicy Bypass -File ./merge.ps1
+
+format:
+  apaquarto-docx: default
+
+resource-path:
+  - "."
+  - "images"

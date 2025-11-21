@@ -1,0 +1,173 @@
+---
+title: "Guía de Uso: Formato APA con Quarto"
+shorttitle: "Guía APA Quarto"
+author:
+  - name: Ccolla Lazarinos Fernando
+    corresponding: true
+    affiliations:
+      - name: Universidad Nacional de Juliaca
+        department: Escuela Profesional de Ingeniería de Software y Sistemas
+        city: Juliaca
+        country: Perú
+abstract: "Este documento proporciona una guía detallada sobre cómo utilizar la extensión apaquarto para generar documentos académicos con formato APA 7ma edición, incluyendo ejemplos de texto, tablas, figuras y citas."
+keywords:
+  - APA Style
+  - Quarto
+  - Markdown
+  - apaquarto
+bibliography: bibliography.bib
+suppress-title-page: true
+suppress-title-page-number: true
+number-sections: true
+number-depth: 3
+lang: es
+language:
+  title-block-author-note: "Nota de Autores"
+  title-block-correspondence-note: "La correspondencia relativa a este artículo debe dirigirse a"
+  citation-last-author-separator: "y"
+  section-title-references: "Referencias"
+floatsintext: true
+
+# Campos personalizados para la portada
+course: "REDES"
+professor: "Prof. Samuel Quispe Mamani"
+faculty: "FACULTAD DE CIENCIAS DE LA INGENIERÍA"
+year-motto: "Año de la recuperación y consolidación de la economía peruana"
+
+format:
+  apaquarto-docx: default
+---
+
+# Introducción
+
+Este documento sirve como una guía de referencia para utilizar el formato `apaquarto`. A continuación se detallan los elementos más comunes.
+
+## Estilos Básicos de Texto
+
+Puedes usar **negrita** para resaltar texto importante y *cursiva* para énfasis. También puedes usar subíndices (H~2~O) y superíndices (x^2^).
+
+## Encabezados
+
+Usa almohadillas `#` para los encabezados. En estilo APA, se recomienda la siguiente jerarquía:
+
+# Nivel 1 (Título Principal)
+
+## Nivel 2 (Subtítulo)
+
+### Nivel 3 (Sección)
+
+#### Nivel 4 (Subsección)
+
+##### Nivel 5 (Detalle)
+
+## Listas
+
+### Listas con Viñetas
+- Elemento 1
+
+- Elemento 2
+
+    - Subelemento A
+
+    - Subelemento B
+
+### Listas Numeradas
+1. Primer paso
+
+2. Segundo paso
+
+3. Tercer paso
+
+## Imágenes
+
+Gracias a la configuración de `resource-path`, puedes referenciar imágenes directamente por su nombre de archivo sin incluir la carpeta `images/`.
+
+```markdown
+![Descripción de la imagen](nombre_archivo.png)
+```
+
+Ejemplo:
+
+![Topología Lógica](01_Topologia_Logica_y_Esquema_de_Direccionamiento_IP.png){
+  #fig-topologia 
+  width="5in" 
+  apa-note="Nota al pie de la figura."
+}
+
+Para referenciar esta figura en el texto, usa @fig-topologia.
+
+## Tablas
+
+### Tablas Markdown Simples
+
+| Columna 1 | Columna 2 |
+|:----------|:----------|
+| A         | 10        |
+| B         | 20        |
+
+: Titulo de tabla. {#tbl-mymarkdowntable2 apa-note="Nota de mi tabla"}
+
+Ver @tbl-mymarkdowntable2.
+
+### Tablas APA con R
+
+Para tablas más complejas y con formato APA automático, se recomienda usar bloques de código R con `flextable` y `apa7`.
+
+```{r}
+#| label: tbl-ejemplo
+#| tbl-cap: Ejemplo de Tabla APA Generada con R
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(flextable)
+
+tibble(
+  Variable = c("A", "B", "C"),
+  Valor = c(10, 20, 30),
+  Descripción = c("Bajo", "Medio", "Alto")
+) %>%
+  flextable() %>%
+  theme_apa() %>%
+  autofit()
+```
+
+Ver @tbl-ejemplo.
+
+## Matemáticas y Ecuaciones
+
+Puedes escribir ecuaciones matemáticas usando la sintaxis de LaTeX.
+
+### Ecuaciones en línea
+Usa un solo signo de dólar `$`. Por ejemplo, $E = mc^2$ se escribe `$E = mc^2$`.
+
+### Ecuaciones en bloque
+Usa doble signo de dólar `$$` para ecuaciones centradas.
+
+$$
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+También puedes etiquetar ecuaciones para referenciarlas:
+
+$$
+e^{i\pi} + 1 = 0
+$$ {#eq-euler}
+
+Como se ve en la @eq-euler, esta es la identidad de Euler.
+
+## Citas y Referencias
+
+Para citar referencias bibliográficas definidas en `bibliography.bib`:
+
+- **Cita parentética**: Esto es un hecho [@CameronTrivedi2013].
+
+- **Cita narrativa**: @CameronTrivedi2013 afirman que...
+
+Las referencias completas se generarán automáticamente al final del documento.
+
+# Referencias
+
+::: {#refs}
+:::

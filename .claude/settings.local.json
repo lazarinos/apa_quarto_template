@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(quarto render:*)",
+      "Bash(Move-Item -Path \"Index.qmd\" -Destination \"index.qmd\" -Force)",
+      "Bash(mv:*)",
+      "Bash(Test-Path Portada.docx)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

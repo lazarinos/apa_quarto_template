@@ -2,7 +2,7 @@
 title: "Guía de Uso: Formato APA con Quarto"
 shorttitle: "Guía APA Quarto"
 author:
-  - name: [Tu Nombre Completo]
+  - name: Ccolla Lazarinos Fernando
     corresponding: true
     affiliations:
       - name: Universidad Nacional de Juliaca
@@ -10,23 +10,25 @@ author:
         city: Juliaca
         country: Perú
 abstract: "Este documento proporciona una guía detallada sobre cómo utilizar la extensión apaquarto para generar documentos académicos con formato APA 7ma edición, incluyendo ejemplos de texto, tablas, figuras y citas."
-keywords: 
+keywords:
   - APA Style
   - Quarto
   - Markdown
   - apaquarto
 bibliography: bibliography.bib
-suppress-title-page: true
-suppress-title-page-number: true
+suppress-title-page: false
 number-sections: true
 number-depth: 3
 lang: es
 language:
   title-block-author-note: "Nota de Autores"
-  title-block-correspondence-note: "La correspondencia relativa a este artículo debe dirigirse a"
-  citation-last-author-separator: "y"
-  section-title-references: "Referencias"
+  title-block-correspondence-note: "La correspondencia"
 floatsintext: true
+
+# Campos personalizados para la portada
+course: "REDES"
+professor: "Prof. Samuel Quispe Mamani"
+
 format:
   apaquarto-docx: default
 ---
@@ -56,7 +58,6 @@ Usa almohadillas `#` para los encabezados. En estilo APA, se recomienda la sigui
 ## Listas
 
 ### Listas con Viñetas
-Ojo que para las listas debe haber salto de linea para renderizar correctamente.
 
 - Elemento 1
 
@@ -67,6 +68,7 @@ Ojo que para las listas debe haber salto de linea para renderizar correctamente.
     - Subelemento B
 
 ### Listas Numeradas
+
 1. Primer paso
 
 2. Segundo paso
@@ -83,7 +85,11 @@ Gracias a la configuración de `resource-path`, puedes referenciar imágenes dir
 
 Ejemplo:
 
-![Topología Lógica](01_Topología_Lógica_y_Esquema_de_Direccionamiento_IP.png){#fig-topologia width="5in" apa-note="Nota al pie de la figura."}
+![Topología Lógica](01_Topologia_Logica_y_Esquema_de_Direccionamiento_IP.png){
+  #fig-topologia 
+  width="5in" 
+  apa-note="Nota al pie de la figura."
+}
 
 Para referenciar esta figura en el texto, usa @fig-topologia.
 
@@ -96,7 +102,7 @@ Para referenciar esta figura en el texto, usa @fig-topologia.
 | A         | 10        |
 | B         | 20        |
 
-: My Caption. {#tbl-mymarkdowntable2 apa-note="My note"}
+: Titulo de tabla. {#tbl-mymarkdowntable2 apa-note="Nota de mi tabla"}
 
 Ver @tbl-mymarkdowntable2.
 

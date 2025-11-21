@@ -1,6 +1,6 @@
 ---
-title: "Guía de Uso: Formato APA con Quarto"
-shorttitle: "Guía APA Quarto"
+title: "Actualidad en Redes Inalámbricas: WiFi y Bluetooth"
+shorttitle: "Redes Inalámbricas WiFi Bluetooth"
 author:
   - name: Ccolla Lazarinos Fernando
     corresponding: true
@@ -9,12 +9,14 @@ author:
         department: Escuela Profesional de Ingeniería de Software y Sistemas
         city: Juliaca
         country: Perú
-abstract: "Este documento proporciona una guía detallada sobre cómo utilizar la extensión apaquarto para generar documentos académicos con formato APA 7ma edición, incluyendo ejemplos de texto, tablas, figuras y citas."
+abstract: "El presente informe analiza el estado actual de las tecnologías de redes inalámbricas, con énfasis especial en los estándares WiFi y Bluetooth. Se examinan las últimas versiones de estos protocolos, incluyendo WiFi 6, WiFi 6E, WiFi 7, Bluetooth 5.3 y Bluetooth LE Audio, destacando sus características técnicas, mejoras en rendimiento, eficiencia energética y casos de uso en el Internet de las Cosas (IoT). Además, se abordan los desafíos de seguridad contemporáneos y las tendencias futuras en conectividad inalámbrica."
 keywords:
-  - APA Style
-  - Quarto
-  - Markdown
-  - apaquarto
+  - Redes inalámbricas
+  - WiFi 6
+  - WiFi 7
+  - Bluetooth 5
+  - IEEE 802.11
+  - IoT
 bibliography: bibliography.bib
 suppress-title-page: false
 number-sections: true
@@ -35,134 +37,350 @@ format:
 
 # Introducción
 
-Este documento sirve como una guía de referencia para utilizar el formato `apaquarto`. A continuación se detallan los elementos más comunes.
+Las redes inalámbricas han experimentado una transformación significativa en las últimas décadas, convirtiéndose en un componente esencial de la infraestructura de comunicaciones moderna [@stallings2024wireless]. Desde su aparición, tecnologías como WiFi y Bluetooth han evolucionado para satisfacer las crecientes demandas de conectividad, velocidad y eficiencia energética que caracterizan a la era digital actual.
 
-## Estilos Básicos de Texto
+El presente informe tiene como objetivo proporcionar una visión integral del estado actual de las tecnologías inalámbricas, analizando los avances más recientes en los estándares WiFi (IEEE 802.11) y Bluetooth. Según @kurose2023networking, comprender estas tecnologías es fundamental para profesionales de redes y sistemas, dado su impacto en prácticamente todos los sectores de la industria y la vida cotidiana.
 
-Puedes usar **negrita** para resaltar texto importante y *cursiva* para énfasis. También puedes usar subíndices (H~2~O) y superíndices (x^2^).
+## Objetivos del Informe
 
-## Encabezados
+Los objetivos específicos de este documento son:
 
-Usa almohadillas `#` para los encabezados. En estilo APA, se recomienda la siguiente jerarquía:
+- Analizar las características técnicas de WiFi 6, WiFi 6E y WiFi 7.
 
-# Nivel 1 (Título Principal)
+- Examinar las mejoras introducidas en Bluetooth 5.x y Bluetooth LE Audio.
 
-## Nivel 2 (Subtítulo)
+- Evaluar los desafíos de seguridad en redes inalámbricas modernas.
 
-### Nivel 3 (Sección)
+- Identificar tendencias futuras en conectividad inalámbrica.
 
-#### Nivel 4 (Subsección)
+# Marco Teórico
 
-##### Nivel 5 (Detalle)
+## Fundamentos de las Redes Inalámbricas
 
-## Listas
+Las redes inalámbricas utilizan ondas electromagnéticas para transmitir datos sin necesidad de cables físicos [@rappaport2024wireless]. Estas tecnologías operan en diferentes bandas del espectro radioeléctrico y emplean diversos protocolos para garantizar la comunicación eficiente entre dispositivos.
 
-### Listas con Viñetas
+@gast2022wifi define las redes inalámbricas como sistemas de comunicación que permiten la interconexión de dispositivos mediante señales de radiofrecuencia, ofreciendo movilidad y flexibilidad que los medios cableados no pueden proporcionar.
 
-- Elemento 1
+## Estándares IEEE 802.11
 
-- Elemento 2
+El Instituto de Ingenieros Eléctricos y Electrónicos (IEEE) ha desarrollado la familia de estándares 802.11, que constituye la base técnica de las redes WiFi. La @tbl-estandares-wifi presenta la evolución de estos estándares.
 
-    - Subelemento A
+| Estándar | Nombre Comercial | Frecuencia | Velocidad Máxima | Año |
+|:---------|:-----------------|:-----------|:-----------------|:----|
+| 802.11b | WiFi 1 | 2.4 GHz | 11 Mbps | 1999 |
+| 802.11a | WiFi 2 | 5 GHz | 54 Mbps | 1999 |
+| 802.11g | WiFi 3 | 2.4 GHz | 54 Mbps | 2003 |
+| 802.11n | WiFi 4 | 2.4/5 GHz | 600 Mbps | 2009 |
+| 802.11ac | WiFi 5 | 5 GHz | 6.9 Gbps | 2014 |
+| 802.11ax | WiFi 6/6E | 2.4/5/6 GHz | 9.6 Gbps | 2021 |
+| 802.11be | WiFi 7 | 2.4/5/6 GHz | 46 Gbps | 2024 |
 
-    - Subelemento B
+: Evolución de los estándares IEEE 802.11. {#tbl-estandares-wifi apa-note="Adaptado de IEEE Standards Association (2021) y Naik et al. (2023)."}
 
-### Listas Numeradas
+## Tecnología Bluetooth
 
-1. Primer paso
+Bluetooth es un estándar de comunicación inalámbrica de corto alcance desarrollado por el Bluetooth Special Interest Group (SIG). Según @bluetooth2023core, esta tecnología opera en la banda ISM de 2.4 GHz y está diseñada para el intercambio de datos entre dispositivos fijos y móviles a distancias cortas.
 
-2. Segundo paso
+# WiFi: Estado Actual y Tendencias
 
-3. Tercer paso
+## WiFi 6 (IEEE 802.11ax)
 
-## Imágenes
+WiFi 6, basado en el estándar IEEE 802.11ax, representa un avance significativo en la tecnología de redes inalámbricas [@ieee80211ax2021]. @khorov2020wifi6 señalan que este estándar fue diseñado específicamente para mejorar el rendimiento en entornos de alta densidad de dispositivos.
 
-Gracias a la configuración de `resource-path`, puedes referenciar imágenes directamente por su nombre de archivo sin incluir la carpeta `images/`.
+### Características Principales de WiFi 6
 
-```markdown
-![Descripción de la imagen](nombre_archivo.png)
-```
+Las mejoras técnicas más relevantes incluyen:
 
-Ejemplo:
+1. **OFDMA (Orthogonal Frequency Division Multiple Access)**: Permite dividir los canales en unidades de recursos más pequeñas, mejorando la eficiencia en la transmisión de datos a múltiples dispositivos simultáneamente.
 
-![Topología Lógica](01_Topologia_Logica_y_Esquema_de_Direccionamiento_IP.png){
-  #fig-topologia 
-  width="5in" 
-  apa-note="Nota al pie de la figura."
+2. **MU-MIMO mejorado**: Soporta hasta 8 flujos espaciales simultáneos, tanto en enlace descendente como ascendente.
+
+3. **Target Wake Time (TWT)**: Reduce el consumo energético de los dispositivos al programar tiempos específicos de activación.
+
+4. **BSS Coloring**: Minimiza la interferencia entre redes adyacentes mediante la identificación de conjuntos de servicios básicos.
+
+![Arquitectura de OFDMA en WiFi 6](wifi6_ofdma.png){
+  #fig-ofdma
+  width="5in"
+  apa-note="Diagrama que muestra cómo OFDMA divide el canal en unidades de recursos (RU) para múltiples usuarios."
 }
 
-Para referenciar esta figura en el texto, usa @fig-topologia.
+Como se observa en la @fig-ofdma, OFDMA permite una utilización más eficiente del espectro disponible.
 
-## Tablas
+## WiFi 6E: Expansión al Espectro de 6 GHz
 
-### Tablas Markdown Simples
+@rochaesilva2023wifi6e explican que WiFi 6E extiende las capacidades de WiFi 6 hacia la banda de 6 GHz, proporcionando hasta 1.2 GHz de espectro adicional libre de interferencias heredadas. Esta expansión permite:
 
-| Columna 1 | Columna 2 |
-|:----------|:----------|
-| A         | 10        |
-| B         | 20        |
+- Mayor ancho de banda disponible para aplicaciones intensivas.
 
-: Titulo de tabla. {#tbl-mymarkdowntable2 apa-note="Nota de mi tabla"}
+- Canales de 160 MHz sin superposición.
 
-Ver @tbl-mymarkdowntable2.
+- Menor latencia para aplicaciones en tiempo real.
 
-### Tablas APA con R
+- Mejor rendimiento en entornos empresariales densos.
 
-Para tablas más complejas y con formato APA automático, se recomienda usar bloques de código R con `flextable` y `apa7`.
+La @tbl-comparacion-wifi6 presenta una comparación entre WiFi 6 y WiFi 6E.
 
-```{r}
-#| label: tbl-ejemplo
-#| tbl-cap: Ejemplo de Tabla APA Generada con R
-#| echo: false
-#| message: false
-#| warning: false
+| Característica | WiFi 6 | WiFi 6E |
+|:---------------|:-------|:--------|
+| Bandas de frecuencia | 2.4 GHz, 5 GHz | 2.4 GHz, 5 GHz, 6 GHz |
+| Espectro adicional | - | Hasta 1.2 GHz |
+| Canales de 160 MHz | 2 (con superposición) | 7 (sin superposición) |
+| Interferencia legacy | Presente | Mínima en 6 GHz |
+| Casos de uso óptimos | Hogares, oficinas | AR/VR, streaming 8K |
 
-library(tidyverse)
-library(flextable)
+: Comparación entre WiFi 6 y WiFi 6E. {#tbl-comparacion-wifi6 apa-note="Basado en Rocha e Silva et al. (2023)."}
 
-tibble(
-  Variable = c("A", "B", "C"),
-  Valor = c(10, 20, 30),
-  Descripción = c("Bajo", "Medio", "Alto")
-) %>%
-  flextable() %>%
-  theme_apa() %>%
-  autofit()
-```
+## WiFi 7 (IEEE 802.11be)
 
-Ver @tbl-ejemplo.
+WiFi 7 representa la próxima generación de conectividad inalámbrica, prometiendo velocidades teóricas de hasta 46 Gbps [@naik2023wifi7]. Este estándar introduce innovaciones revolucionarias que transformarán la experiencia de usuario.
 
-## Matemáticas y Ecuaciones
+### Innovaciones Técnicas de WiFi 7
 
-Puedes escribir ecuaciones matemáticas usando la sintaxis de LaTeX.
+Según @naik2023wifi7, las principales innovaciones incluyen:
 
-### Ecuaciones en línea
-Usa un solo signo de dólar `$`. Por ejemplo, $E = mc^2$ se escribe `$E = mc^2$`.
+1. **Multi-Link Operation (MLO)**: Permite que un dispositivo transmita y reciba datos simultáneamente a través de múltiples bandas de frecuencia.
 
-### Ecuaciones en bloque
-Usa doble signo de dólar `$$` para ecuaciones centradas.
+2. **Canales de 320 MHz**: Duplica el ancho de canal máximo disponible en WiFi 6E.
 
-$$
-x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
-$$
+3. **4K-QAM**: Aumenta la densidad de modulación, permitiendo transmitir más bits por símbolo.
 
-También puedes etiquetar ecuaciones para referenciarlas:
+4. **Puncturing mejorado**: Permite utilizar porciones de canales afectados por interferencia.
 
-$$
-e^{i\pi} + 1 = 0
-$$ {#eq-euler}
+![Operación Multi-Link en WiFi 7](wifi7_mlo.png){
+  #fig-mlo
+  width="5in"
+  apa-note="Ilustración de Multi-Link Operation mostrando transmisión simultánea en múltiples bandas de frecuencia."
+}
 
-Como se ve en la @eq-euler, esta es la identidad de Euler.
+La @fig-mlo ilustra cómo MLO mejora el rendimiento y la confiabilidad de la conexión.
 
-## Citas y Referencias
+# Bluetooth: Evolución y Aplicaciones Actuales
 
-Para citar referencias bibliográficas definidas en `bibliography.bib`:
+## Bluetooth 5.x: Mejoras Sustanciales
 
-- **Cita parentética**: Esto es un hecho [@CameronTrivedi2013].
+La serie Bluetooth 5.x ha introducido mejoras significativas en alcance, velocidad y capacidad de difusión [@bluetooth2023core]. @collotta2023bluetooth53 destacan que Bluetooth 5.3 representa un hito importante para aplicaciones IoT.
 
-- **Cita narrativa**: @CameronTrivedi2013 afirman que...
+### Características de Bluetooth 5.3
 
-Las referencias completas se generarán automáticamente al final del documento.
+| Versión | Alcance | Velocidad | Capacidad Broadcast | Año |
+|:--------|:--------|:----------|:--------------------|:----|
+| 4.2 | ~50 m | 1 Mbps | Limitada | 2014 |
+| 5.0 | ~200 m | 2 Mbps | Mejorada | 2016 |
+| 5.1 | ~200 m | 2 Mbps | + Localización | 2019 |
+| 5.2 | ~200 m | 2 Mbps | LE Audio | 2020 |
+| 5.3 | ~200 m | 2 Mbps | + Eficiencia | 2021 |
+| 5.4 | ~200 m | 2 Mbps | + PAwR | 2023 |
+
+: Evolución de las versiones de Bluetooth. {#tbl-bluetooth-versiones apa-note="Basado en Bluetooth SIG (2023) y Collotta et al. (2023)."}
+
+@woolley2023bluetooth explican que las mejoras en Bluetooth 5.x incluyen:
+
+- **LE Power Control**: Optimización dinámica de la potencia de transmisión.
+
+- **Periodic Advertising with Responses (PAwR)**: Comunicación bidireccional eficiente para IoT.
+
+- **Channel Classification Enhancement**: Mejor adaptación a entornos con interferencia.
+
+## Bluetooth LE Audio
+
+Bluetooth LE Audio representa una revolución en la transmisión de audio inalámbrico [@chen2023bleaudio]. Esta tecnología introduce:
+
+### Códec LC3 (Low Complexity Communication Codec)
+
+El códec LC3 ofrece mejor calidad de audio con menor consumo de bitrate comparado con SBC (Sub-Band Coding), el códec tradicional de Bluetooth Classic Audio.
+
+![Comparación de calidad de audio entre códecs](bluetooth_lc3.png){
+  #fig-lc3
+  width="5in"
+  apa-note="Gráfico comparativo de calidad de audio versus bitrate para los códecs LC3 y SBC."
+}
+
+### Auracast: Difusión de Audio
+
+@chen2023bleaudio describen Auracast como una característica que permite:
+
+- Compartir audio con un número ilimitado de receptores.
+
+- Casos de uso en aeropuertos, gimnasios y conferencias.
+
+- Accesibilidad mejorada para personas con discapacidad auditiva.
+
+# Seguridad en Redes Inalámbricas
+
+## Desafíos Actuales de Seguridad
+
+@aldawoodi2024wifisecurity identifican los principales desafíos de seguridad en redes WiFi modernas:
+
+1. **Ataques de intermediario (MITM)**: Intercepción de comunicaciones entre dispositivos.
+
+2. **Evil Twin**: Puntos de acceso falsos que suplantan redes legítimas.
+
+3. **Ataques de denegación de servicio**: Saturación de la red para impedir su uso.
+
+4. **Vulnerabilidades en WPA3**: Aunque mejorado, aún presenta vectores de ataque.
+
+## Protocolos de Seguridad
+
+La @tbl-seguridad-wifi resume la evolución de los protocolos de seguridad WiFi.
+
+| Protocolo | Cifrado | Estado | Vulnerabilidades Conocidas |
+|:----------|:--------|:-------|:---------------------------|
+| WEP | RC4 | Obsoleto | Múltiples, fácilmente crackeable |
+| WPA | TKIP/RC4 | Obsoleto | TKIP comprometido |
+| WPA2 | AES-CCMP | En uso | KRACK, Dragonblood |
+| WPA3 | AES-GCMP/SAE | Recomendado | Dragonblood (parcheado) |
+
+: Evolución de protocolos de seguridad WiFi. {#tbl-seguridad-wifi apa-note="Basado en Al-Dawoodi et al. (2024)."}
+
+## Seguridad en Bluetooth
+
+@bluetooth2023core especifican que Bluetooth implementa múltiples niveles de seguridad:
+
+- **Modo 1**: Sin seguridad.
+
+- **Modo 2**: Seguridad a nivel de servicio.
+
+- **Modo 3**: Seguridad a nivel de enlace.
+
+- **Modo 4**: Secure Simple Pairing (SSP) con cifrado AES-CCM.
+
+# Integración con Otras Tecnologías
+
+## Convergencia 5G y WiFi
+
+@gupta20235gwifi analizan la integración entre redes 5G y WiFi 6, destacando:
+
+- Handover seamless entre tecnologías.
+
+- Balanceo de carga inteligente.
+
+- Casos de uso en entornos industriales (Industria 4.0).
+
+![Arquitectura de integración 5G-WiFi](5g_wifi_integration.png){
+  #fig-5gwifi
+  width="5in"
+  apa-note="Diagrama de arquitectura mostrando la integración entre el núcleo 5G y los puntos de acceso WiFi 6."
+}
+
+## Redes Mesh Inalámbricas
+
+@saha2024meshnetworks explican que las redes mesh representan una evolución importante:
+
+- Cobertura extendida sin puntos únicos de falla.
+
+- Auto-configuración y auto-reparación.
+
+- Aplicaciones en hogares inteligentes y ciudades conectadas.
+
+## Estándar Matter para IoT
+
+El protocolo Matter, desarrollado por la Connectivity Standards Alliance, unifica la comunicación entre dispositivos IoT [@csa2023matter]. Según @cisco2024wirelessdesign, Matter opera sobre:
+
+- WiFi para dispositivos de alto ancho de banda.
+
+- Thread (basado en IEEE 802.15.4) para dispositivos de bajo consumo.
+
+- Bluetooth LE para aprovisionamiento y configuración.
+
+# Tecnologías Emergentes
+
+## Ultra-Wideband (UWB)
+
+@ray2024uwb describen UWB como una tecnología complementaria a Bluetooth y WiFi, especializada en:
+
+- Localización de alta precisión (centímetros).
+
+- Aplicaciones de llaves digitales en automóviles.
+
+- Seguimiento de activos en interiores.
+
+| Característica | UWB | Bluetooth | WiFi |
+|:---------------|:----|:----------|:-----|
+| Precisión localización | ~10 cm | ~1-3 m | ~3-5 m |
+| Alcance | 10-50 m | 10-200 m | 50-100 m |
+| Consumo energético | Bajo | Muy bajo | Alto |
+| Velocidad datos | 27 Mbps | 2 Mbps | Gbps |
+
+: Comparación de tecnologías de posicionamiento indoor. {#tbl-uwb-comparacion apa-note="Basado en Ray et al. (2024)."}
+
+## Tendencias Futuras
+
+Las tendencias identificadas por @stallings2024wireless incluyen:
+
+1. **WiFi 8 (IEEE 802.11bn)**: En desarrollo, con enfoque en comunicaciones de ultra baja latencia.
+
+2. **Bluetooth 6.0**: Mejoras en localización y eficiencia energética.
+
+3. **Integración con IA**: Optimización de redes mediante aprendizaje automático.
+
+4. **Comunicaciones THz**: Investigación para frecuencias de terahercios.
+
+# Aplicaciones Prácticas
+
+## Casos de Uso Empresariales
+
+@cisco2024wirelessdesign recomiendan las siguientes implementaciones:
+
+### Oficinas Modernas
+
+- WiFi 6E para estaciones de trabajo.
+
+- Bluetooth para periféricos y dispositivos IoT.
+
+- Redes separadas para invitados y empleados.
+
+### Entornos Industriales
+
+- WiFi 6 para comunicación máquina a máquina.
+
+- UWB para seguimiento de activos.
+
+- Redes mesh para cobertura en plantas extensas.
+
+![Diseño de red inalámbrica empresarial](enterprise_wireless.png){
+  #fig-enterprise
+  width="5in"
+  apa-note="Diagrama de arquitectura de red inalámbrica empresarial con controladores, puntos de acceso y segmentación de VLANs."
+}
+
+## Casos de Uso en el Hogar
+
+Para entornos residenciales, @gast2022wifi sugieren:
+
+- Sistemas mesh para cobertura uniforme.
+
+- WiFi 6E para streaming y gaming.
+
+- Bluetooth para domótica y wearables.
+
+# Conclusiones
+
+El análisis realizado permite establecer las siguientes conclusiones:
+
+1. **WiFi continúa evolucionando** hacia mayores velocidades, menor latencia y mejor eficiencia en entornos densos. WiFi 7 representa un salto significativo con MLO y canales de 320 MHz [@naik2023wifi7].
+
+2. **Bluetooth se especializa** en aplicaciones IoT y audio de alta calidad. LE Audio con el códec LC3 revoluciona la transmisión de audio inalámbrico [@chen2023bleaudio].
+
+3. **La seguridad sigue siendo crítica**. A pesar de las mejoras en WPA3, es fundamental mantener actualizados los dispositivos y seguir buenas prácticas de seguridad [@aldawoodi2024wifisecurity].
+
+4. **La convergencia tecnológica es inevitable**. La integración de 5G, WiFi 6 y Bluetooth crea ecosistemas de conectividad más robustos y versátiles [@gupta20235gwifi].
+
+5. **Tecnologías emergentes** como UWB complementarán las existentes para casos de uso especializados [@ray2024uwb].
+
+## Recomendaciones
+
+Para profesionales de redes se recomienda:
+
+- Planificar migraciones hacia WiFi 6E/7 en infraestructuras nuevas.
+
+- Considerar Bluetooth LE para despliegues IoT de gran escala.
+
+- Implementar WPA3 como estándar mínimo de seguridad.
+
+- Evaluar tecnologías mesh para entornos con requisitos de cobertura extendida.
+
+- Mantenerse actualizado sobre el estándar Matter para proyectos de hogar inteligente.
 
 # Referencias
 

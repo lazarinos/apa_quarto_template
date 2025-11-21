@@ -16,23 +16,18 @@ keywords:
   - Markdown
   - apaquarto
 bibliography: bibliography.bib
-suppress-title-page: true
-suppress-title-page-number: true
+suppress-title-page: false
 number-sections: true
 number-depth: 3
 lang: es
 language:
   title-block-author-note: "Nota de Autores"
-  title-block-correspondence-note: "La correspondencia relativa a este artículo debe dirigirse a"
-  citation-last-author-separator: "y"
-  section-title-references: "Referencias"
+  title-block-correspondence-note: "La correspondencia"
 floatsintext: true
 
 # Campos personalizados para la portada
 course: "REDES"
 professor: "Prof. Samuel Quispe Mamani"
-faculty: "FACULTAD DE CIENCIAS DE LA INGENIERÍA"
-year-motto: "Año de la recuperación y consolidación de la economía peruana"
 
 format:
   apaquarto-docx: default
@@ -63,6 +58,7 @@ Usa almohadillas `#` para los encabezados. En estilo APA, se recomienda la sigui
 ## Listas
 
 ### Listas con Viñetas
+
 - Elemento 1
 
 - Elemento 2
@@ -72,6 +68,7 @@ Usa almohadillas `#` para los encabezados. En estilo APA, se recomienda la sigui
     - Subelemento B
 
 ### Listas Numeradas
+
 1. Primer paso
 
 2. Segundo paso

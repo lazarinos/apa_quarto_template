@@ -71,7 +71,17 @@ $authorName = Get-FirstAuthorName -Yaml $yamlBlock
 $course = Get-ScalarValue -Yaml $yamlBlock -Key "course"
 $professor = Get-ScalarValue -Yaml $yamlBlock -Key "professor"
 $faculty = Get-ScalarValue -Yaml $yamlBlock -Key "faculty"
+$school = Get-ScalarValue -Yaml $yamlBlock -Key "school"
+$university = Get-ScalarValue -Yaml $yamlBlock -Key "university"
+$location = Get-ScalarValue -Yaml $yamlBlock -Key "location"
 $yearMotto = Get-ScalarValue -Yaml $yamlBlock -Key "year-motto"
+
+# Enforce Uppercase for specific fields as requested
+if (-not [string]::IsNullOrWhiteSpace($course)) { $course = $course.ToUpper() }
+if (-not [string]::IsNullOrWhiteSpace($faculty)) { $faculty = $faculty.ToUpper() }
+if (-not [string]::IsNullOrWhiteSpace($school)) { $school = $school.ToUpper() }
+if (-not [string]::IsNullOrWhiteSpace($university)) { $university = $university.ToUpper() }
+if (-not [string]::IsNullOrWhiteSpace($location)) { $location = $location.ToUpper() }
 
 Write-Host "  Titulo: $title" -ForegroundColor Green
 Write-Host "  Autor: $authorName" -ForegroundColor Green
@@ -98,7 +108,7 @@ $word.DisplayAlerts = 0 # wdAlertsNone
 
 function Replace-Placeholder {
     param(
-        [Microsoft.Office.Interop.Word.Document]$Doc,
+        [object]$Doc,
         [string]$Placeholder,
         [string]$Value
     )
@@ -122,7 +132,7 @@ function Replace-Placeholder {
 # Reemplazo de respaldo: cambia el párrafo que sigue a una etiqueta fija, conservando el estilo.
 function Replace-AfterLabel {
     param(
-        [Microsoft.Office.Interop.Word.Document]$Doc,
+        [object]$Doc,
         [string]$LabelText,
         [string]$Value
     )
@@ -132,15 +142,114 @@ function Replace-AfterLabel {
     $comparison = [System.StringComparison]::InvariantCultureIgnoreCase
     $paragraphs = $Doc.Paragraphs
 
-    for ($i = 1; $i -lt $paragraphs.Count; $i++) {
+    for ($i = 1; $i -le $paragraphs.Count; $i++) {
         $p = $paragraphs.Item($i)
         $text = $p.Range.Text.Trim()
+        
+        # Case 1: Exact match (Label is on its own line) -> Replace next paragraph
         if ($text.Equals($LabelText, $comparison)) {
-            $next = $paragraphs.Item($i + 1)
+            if ($i -lt $paragraphs.Count) {
+                $next = $paragraphs.Item($i + 1)
+                $newText = $Value
+                if (-not $newText.EndsWith("`r")) { $newText += "`r" }
+                $next.Range.Text = $newText
+                return
+            }
+        }
+        # Case 2: Prefix match (Label is start of line) -> Replace rest of line
+        elseif ($text.StartsWith($LabelText, $comparison)) {
+            # If the text is just the label (plus maybe whitespace/colon), it might be Case 1 but failed exact match due to hidden chars?
+            # But let's assume it's "LABEL: OldValue"
+            
+            # We want to keep the label and replace the rest.
+            # But we need to be careful about formatting.
+            
+            # Simple approach: Replace the whole paragraph text with "Label: Value"
+            # This preserves the paragraph style.
+            
+            # Check if it already has the value to avoid redundant edits? No, always update.
+            
+            # Construct new text. Ensure we keep the label exactly as found or as passed?
+            # Let's use the passed LabelText to be safe, or just append.
+            
+            # If we replace the whole text range, we lose bolding if it was mixed.
+            # But usually these headers are uniform style.
+            
+            $newText = "$LabelText $Value"
+            if (-not $newText.EndsWith("`r")) { $newText += "`r" }
+            $p.Range.Text = $newText
+            return
+        }
+    }
+}
+
+# Reemplazo genérico para cualquier texto entre corchetes que haya quedado.
+function Replace-BracketedPlaceholders {
+    param(
+        [object]$Doc,
+        [System.Collections.Hashtable]$Values
+    )
+
+    $mapping = @(
+        @{ Pattern = '(?i)curso';        Key = 'course' }
+        @{ Pattern = '(?i)t[ií]tulo';    Key = 'title' }
+        @{ Pattern = '(?i)informe';      Key = 'title' }
+        @{ Pattern = '(?i)monograf[ií]a';Key = 'title' }
+        @{ Pattern = '(?i)presentado';   Key = 'author' }
+        @{ Pattern = '(?i)autor';        Key = 'author' }
+        @{ Pattern = '(?i)docente';      Key = 'professor' }
+        @{ Pattern = '(?i)profesor';     Key = 'professor' }
+        @{ Pattern = '(?i)facultad';     Key = 'faculty' }
+        @{ Pattern = '(?i)escuela';      Key = 'school' }
+        @{ Pattern = '(?i)universidad';  Key = 'university' }
+        @{ Pattern = '(?i)per[uú]|ubicaci[oó]n'; Key = 'location' }
+        @{ Pattern = '(?i)a[nñ]o|año';   Key = 'yearMotto' }
+    )
+
+    $find = $Doc.Content.Find
+    $find.ClearFormatting()
+    $find.Replacement.ClearFormatting()
+    $find.Text = "\[[!\]]@\]"  # texto dentro de corchetes, sin anidar
+    $find.MatchWildcards = $true
+    $find.MatchCase = $false
+    $find.Wrap = 1 # wdFindContinue
+
+    while ($find.Execute()) {
+        $range = $find.Parent
+        $inner = $range.Text.Trim().TrimStart("[").TrimEnd("]").Trim()
+
+        foreach ($m in $mapping) {
+            if ($inner -match $m.Pattern) {
+                $val = $Values[$m.Key]
+                if (-not [string]::IsNullOrWhiteSpace($val)) {
+                    $newText = $val
+                    if (-not $newText.EndsWith("`r")) { $newText += "`r" }
+                    $range.Text = $newText
+                    # 0 = wdCollapseEnd. Avoids dependency on Interop type loading.
+                    $range.Collapse(0)
+                }
+                break
+            }
+        }
+    }
+}
+
+# Fallback: replace any paragraph whose entire text matches the placeholder.
+function Replace-ParagraphExact {
+    param(
+        [object]$Doc,
+        [string]$Placeholder,
+        [string]$Value
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Value)) { return }
+
+    foreach ($p in $Doc.Paragraphs) {
+        $text = $p.Range.Text.Trim()
+        if ($text.Equals($Placeholder, [System.StringComparison]::InvariantCultureIgnoreCase)) {
             $newText = $Value
             if (-not $newText.EndsWith("`r")) { $newText += "`r" }
-            $next.Range.Text = $newText
-            return
+            $p.Range.Text = $newText
         }
     }
 }
@@ -151,14 +260,16 @@ try {
     # Asegurar directorios por defecto (documentos y plantilla normal) apuntan a temp accesible
     $word.Options.DefaultFilePath(0) = $tempPath   # wdDocumentsPath
     $word.Options.DefaultFilePath(2) = $tempPath   # wdUserTemplatesPath
-
     $placeholders = @{
-        "{{TITULO}}"   = $title
-        "{{AUTOR}}"    = $authorName
-        "{{CURSO}}"    = $course
-        "{{PROFESOR}}" = $professor
-        "{{FACULTAD}}" = $faculty
-        "{{ANIO}}"     = $yearMotto
+        "{{TITULO}}"      = $title
+        "{{AUTOR}}"       = $authorName
+        "{{CURSO}}"       = $course
+        "{{PROFESOR}}"    = $professor
+        "{{FACULTAD}}"    = $faculty
+        "{{ESCUELA}}"     = $school
+        "{{UNIVERSIDAD}}" = $university
+        "{{UBICACION}}"   = $location
+        "{{ANIO}}"        = $yearMotto
     }
 
     foreach ($item in $placeholders.GetEnumerator()) {
@@ -166,15 +277,44 @@ try {
     }
 
     # Reemplazos de respaldo por etiquetas fijas del template existente
+    # Reemplazos de respaldo por etiquetas fijas del template existente
     Replace-AfterLabel -Doc $doc -LabelText "CURSO:" -Value $course
+    
+    # Lógica mejorada para el TÍTULO
+    Replace-AfterLabel -Doc $doc -LabelText "TÍTULO DEL INFORME:" -Value $title
     Replace-AfterLabel -Doc $doc -LabelText "TITULO DEL INFORME:" -Value $title
     Replace-AfterLabel -Doc $doc -LabelText "PRESENTADO POR:" -Value $authorName
     Replace-AfterLabel -Doc $doc -LabelText "DOCENTE DEL CURSO:" -Value $professor
 
-    # Sustituir lema del año si coincide el texto completo
+    # Reemplazo directo de otros placeholders si existen (backup)
+    Replace-Placeholder -Doc $doc -Placeholder "[NOMBRE DEL CURSO EN MAYUSCULAS]" -Value $course
+    Replace-Placeholder -Doc $doc -Placeholder "[AUTOR, O AUTORES capitalizado]" -Value $authorName
+    Replace-Placeholder -Doc $doc -Placeholder "[DOCENTE DEL CURSO capitalizado]" -Value $professor
+    Replace-Placeholder -Doc $doc -Placeholder "[DEL INFORME, DE LA MONOGRAFIA, ETC.]" -Value $title
+    Replace-Placeholder -Doc $doc -Placeholder "[aqui el titulo del informe capitalizado]" -Value $title
+    Replace-ParagraphExact -Doc $doc -Placeholder "{{TITULO}}" -Value $title
+    Replace-ParagraphExact -Doc $doc -Placeholder "{{CURSO}}" -Value $course
+    Replace-ParagraphExact -Doc $doc -Placeholder "{{AUTOR}}" -Value $authorName
+    Replace-ParagraphExact -Doc $doc -Placeholder "{{PROFESOR}}" -Value $professor
+
+    # Sustituir lema del a∩┐╜o si coincide el texto completo
     if (-not [string]::IsNullOrWhiteSpace($yearMotto)) {
-        Replace-Placeholder -Doc $doc -Placeholder "Año de la recuperación y consolidación de la economía peruana" -Value $yearMotto
+        Replace-Placeholder -Doc $doc -Placeholder "A∩┐╜o de la recuperaci∩┐╜n y consolidaci∩┐╜n de la econom∩┐╜a peruana" -Value $yearMotto
     }
+
+    # Reemplazo final de cualquier texto entre corchetes que haya quedado.
+    $valuesTable = @{
+        course     = $course
+        title      = $title
+        author     = $authorName
+        professor  = $professor
+        faculty    = $faculty
+        school     = $school
+        university = $university
+        location   = $location
+        yearMotto  = $yearMotto
+    }
+    Replace-BracketedPlaceholders -Doc $doc -Values $valuesTable
 
     $doc.SaveAs([ref]$outputPath)
     $doc.Close()
@@ -185,6 +325,9 @@ catch {
     Write-Error "Error al generar portada: $_"
 }
 finally {
-    $word.Quit()
-    [System.Runtime.Interopservices.Marshal]::ReleaseComObject($word) | Out-Null
+    if ($word) {
+        $word.Quit()
+        [System.Runtime.Interopservices.Marshal]::ReleaseComObject($word) | Out-Null
+    }
 }
+
